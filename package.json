@@ -1,5 +1,5 @@
 {
-  "name": "video-react",
+  "name": "react-yiyi-video",
   "version": "0.14.1",
   "description": "Video-React is a web video player built from the ground up for an HTML5 world using React library.",
   "main": "lib/index.js",

@@ -63,14 +63,26 @@ export default class SeekBar extends Component {
     const { actions } = this.props;
     const newTime = this.getNewTime(event);
     // Set new time (tell video to seek to new time)
-    actions.seek(newTime);
-    actions.handleEndSeeking(newTime);
+    // console.log('handleMouseUp slider', this.props, newTime);
+    if (newTime < this.props.canSeekTime) {
+      actions.seek(newTime);
+      actions.handleEndSeeking(newTime);
+    } else {
+      actions.seek(this.props.canSeekTime);
+      actions.handleEndSeeking(this.props.canSeekTime);
+    }
   }
 
   handleMouseMove(event) {
     const { actions } = this.props;
     const newTime = this.getNewTime(event);
-    actions.handleSeekingTime(newTime);
+    // console.log('handleMouseMove slider', this.props, newTime);
+    if (newTime < this.props.canSeekTime) {
+      actions.handleSeekingTime(newTime);
+    } else {
+      actions.seek(this.props.canSeekTime);
+      actions.handleEndSeeking(this.props.canSeekTime);
+    }
   }
 
   stepForward() {
@@ -100,7 +112,7 @@ export default class SeekBar extends Component {
           'video-react-progress-holder',
           this.props.className
         )}
-        valuenow={(this.getPercent() * 100).toFixed(2)}
+        valuenow={(this.getPercent() * 100).toFixed(3)}
         valuetext={formatTime(time, duration)}
         onMouseDown={this.handleMouseDown}
         onMouseMove={this.handleMouseMove}
