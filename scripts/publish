@@ -1,3 +1,10 @@
+###
+ # @Date: 2020-03-25 21:35:29
+ # @Author: Do not edit
+ # @LastEditors: qiye
+ # @LastEditTime: 2021-12-31 14:52:33
+ # @FilePath: /video-react/scripts/publish
+###
 #!/usr/bin/env bash
 
 set -e
@@ -16,7 +23,7 @@ error() {
 if [ -z "$TRAVIS" ]; then
   git checkout master
   git pull
-  npm install
+
   npm run build
 fi
 
