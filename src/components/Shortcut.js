@@ -63,10 +63,27 @@ export default class Shortcut extends Component {
           if (!player.hasStarted) {
             return;
           }
-          actions.forward(5, {
-            action: 'forward-5',
-            source: 'shortcut'
-          }); // Go forward 5 seconds
+          let seekTime = 5;
+          let isOver = player.currentTime + seekTime > this.props.canSeekTime;
+          console.log(
+            '快进=',
+            this.props.canSeekTime,
+            'player',
+            player,
+            isOver,
+            player.currentTime + seekTime
+          );
+          let newTime = isOver
+            ? this.props.canSeekTime
+            : player.currentTime + seekTime;
+          actions.seek(newTime);
+          if (isOver) {
+            actions.pause();
+          }
+          // actions.forward(5, {
+          //   action: 'forward-5',
+          //   source: 'shortcut'
+          // }); // Go forward 5 seconds
         }
       },
       {
@@ -75,10 +92,30 @@ export default class Shortcut extends Component {
           if (!player.hasStarted) {
             return;
           }
-          actions.forward(10, {
-            action: 'forward-10',
-            source: 'shortcut'
-          }); // Go forward 10 seconds
+          let seekTime = 10;
+          let isOver = player.currentTime + seekTime > this.props.canSeekTime;
+          console.log(
+            '快进=',
+            this.props.canSeekTime,
+            'player',
+            player,
+            isOver,
+            player.currentTime + seekTime
+          );
+
+          let newTime = isOver
+            ? this.props.canSeekTime
+            : player.currentTime + seekTime;
+
+          if (isOver) {
+            actions.pause();
+          }
+          actions.seek(newTime);
+
+          // actions.forward(10, {
+          //   action: 'forward-10',
+          //   source: 'shortcut'
+          // }); // Go forward 10 seconds
         }
       },
       {
@@ -96,8 +133,18 @@ export default class Shortcut extends Component {
           if (!player.hasStarted) {
             return;
           }
+          console.log('快进=', this.props.canSeekTime, 'player', player);
+          let newTime =
+            player.duration > this.props.canSeekTime
+              ? this.props.canSeekTime
+              : player.duration;
+          if (player.currentTime + 5 > this.props.canSeekTime) {
+            actions.pause();
+          }
+          actions.seek(newTime);
+
           // Go to end of video
-          actions.seek(player.duration);
+          // actions.seek(player.duration);
         }
       },
       {
@@ -215,9 +262,10 @@ export default class Shortcut extends Component {
       alt = false
     }) => `${keyCode}:${ctrl}:${shift}:${alt}`;
     const defaultShortcuts = this.defaultShortcuts.reduce(
-      (shortcuts, shortcut) => Object.assign(shortcuts, {
-        [getShortcutKey(shortcut)]: shortcut
-      }),
+      (shortcuts, shortcut) =>
+        Object.assign(shortcuts, {
+          [getShortcutKey(shortcut)]: shortcut
+        }),
       {}
     );
     const mergedShortcuts = (this.props.shortcuts || []).reduce(
@@ -233,10 +281,10 @@ export default class Shortcut extends Component {
       defaultShortcuts
     );
 
-    const gradeShortcut = (s) => {
+    const gradeShortcut = s => {
       let score = 0;
       const ps = ['ctrl', 'shift', 'alt'];
-      ps.forEach((key) => {
+      ps.forEach(key => {
         if (s[key]) {
           score++;
         }
@@ -273,11 +321,11 @@ export default class Shortcut extends Component {
       return;
     }
     if (
-      document.activeElement
-      && (hasClass(document.activeElement, 'video-react-control')
-        || hasClass(document.activeElement, 'video-react-menu-button-active')
+      document.activeElement &&
+      (hasClass(document.activeElement, 'video-react-control') ||
+        hasClass(document.activeElement, 'video-react-menu-button-active') ||
         // || hasClass(document.activeElement, 'video-react-slider')
-        || hasClass(document.activeElement, 'video-react-big-play-button'))
+        hasClass(document.activeElement, 'video-react-big-play-button'))
     ) {
       return;
     }
@@ -287,14 +335,14 @@ export default class Shortcut extends Component {
     const shift = e.shiftKey;
     const alt = e.altKey;
 
-    const shortcut = this.shortcuts.filter((s) => {
+    const shortcut = this.shortcuts.filter(s => {
       if (!s.keyCode || s.keyCode - keyCode !== 0) {
         return false;
       }
       if (
-        (s.ctrl !== undefined && s.ctrl !== ctrl)
-        || (s.shift !== undefined && s.shift !== shift)
-        || (s.alt !== undefined && s.alt !== alt)
+        (s.ctrl !== undefined && s.ctrl !== ctrl) ||
+        (s.shift !== undefined && s.shift !== shift) ||
+        (s.alt !== undefined && s.alt !== alt)
       ) {
         return false;
       }
@@ -310,9 +358,9 @@ export default class Shortcut extends Component {
   // only if player is active and player is ready
   canBeClicked(player, e) {
     if (
-      !player.isActive
-      || e.target.nodeName !== 'VIDEO'
-      || player.readyState !== 4
+      !player.isActive ||
+      e.target.nodeName !== 'VIDEO' ||
+      player.readyState !== 4
     ) {
       return false;
     }
