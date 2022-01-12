@@ -1,6 +1,6 @@
 {
   "name": "react-yiyi-video",
-  "version": "0.14.4",
+  "version": "0.14.5",
   "description": "Video-React is a web video player built from the ground up for an HTML5 world using React library.",
   "main": "lib/index.js",
   "style": "dist/video-react.css",
@@ -82,8 +82,8 @@
     "redux": "^4.0.1"
   },
   "peerDependencies": {
-    "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "react": ">=15.0.0",
+    "react-dom": ">=15.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
