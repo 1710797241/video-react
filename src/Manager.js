@@ -1,3 +1,10 @@
+/*
+ * @Date: 2020-03-25 21:35:29
+ * @Author: Do not edit
+ * @LastEditors: qiye
+ * @LastEditTime: 2022-01-12 15:56:07
+ * @FilePath: /video-react/src/Manager.js
+ */
 import { createStore } from 'redux';
 import reducer from './reducers';
 import * as playerActions from './actions/player';
@@ -54,6 +61,16 @@ export default class Manager {
       if (state === prevState) {
         return;
       }
+
+      // console.log(
+      //   state === prevState,
+      //   prevState,
+      //   'prevState',
+      //   'subscribeToStateChange===',
+      //   state,
+      //   'state'
+      // );
+
       const prevStateCopy = prevState;
       prevState = state;
       listener(state, prevStateCopy);

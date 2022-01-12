@@ -316,6 +316,10 @@ export default class Player extends Component {
   subscribeToStateChange(listener) {
     return this.manager.subscribeToPlayerStateChange(listener);
   }
+  // subscribe to Operation state change
+  subscribeToOperationStateChange(listener) {
+    return this.manager.subscribeToOperationStateChange(listener);
+  }
 
   // player resize
   handleResize() {}
