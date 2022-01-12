@@ -2,7 +2,7 @@
  * @Date: 2020-03-25 21:35:29
  * @Author: Do not edit
  * @LastEditors: qiye
- * @LastEditTime: 2021-12-31 14:46:39
+ * @LastEditTime: 2022-01-12 23:32:53
  * @FilePath: /video-react/docs/lib/examples/import-basic.js
  */
 import React from 'react';
@@ -10,11 +10,8 @@ import { Player } from '../../../src/index';
 
 export default class Index extends React.Component {
   componentDidMount() {
-    this.player.subscribeToStateChange(state => {
+    this.player.subscribeToOperationStateChange(state => {
       console.log(state, 'state');
-      if (state.currentTime >= 20) {
-        this.player.pause();
-      }
     });
   }
   render() {
