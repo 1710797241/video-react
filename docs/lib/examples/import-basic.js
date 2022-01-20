@@ -2,7 +2,7 @@
  * @Date: 2020-03-25 21:35:29
  * @Author: Do not edit
  * @LastEditors: qiye
- * @LastEditTime: 2022-01-12 23:32:53
+ * @LastEditTime: 2022-01-13 10:03:23
  * @FilePath: /video-react/docs/lib/examples/import-basic.js
  */
 import React from 'react';
@@ -12,6 +12,9 @@ export default class Index extends React.Component {
   componentDidMount() {
     this.player.subscribeToOperationStateChange(state => {
       console.log(state, 'state');
+    });
+    this.player.subscribeToStateChange(state => {
+      console.log(state, 'subscribeToStateChange');
     });
   }
   render() {
